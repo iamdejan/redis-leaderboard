@@ -1,9 +1,13 @@
 export default class Player {
-  public id: number;
   public name: string;
+  public score: number;
 
-  constructor(id: number, name: string) {
-    this.id = id;
+  constructor(name: string, score: number) {
     this.name = name;
+    this.score = score;
+  }
+
+  public toArray(): [score: number, name: string] {
+    return [this.score, this.name];
   }
 }
