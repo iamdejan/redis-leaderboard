@@ -24,7 +24,7 @@ export async function savePlayer(request: Request, response: Response): Promise<
 }
 
 export async function getTopNPlayers(request: Request, response: Response): Promise<void> {
-  const N: number = Number.parseInt(request.query.N as string)
+  const N: number = Number.parseInt(request.query.N as string);
 
   const client = createNodeRedisClient();
   const playerNames: string[] = await client.zrevrange(KEY, 0, N - 1);
@@ -38,7 +38,7 @@ export async function getTopNPlayers(request: Request, response: Response): Prom
 }
 
 export async function getPlayer(request: Request, response: Response): Promise<void> {
-  const playerName: string = request.params.name as string
+  const playerName: string = request.params.name;
 
   const client = createNodeRedisClient();
   const scoreStr: string = await client.zscore(KEY, playerName);
@@ -53,7 +53,7 @@ export async function getPlayer(request: Request, response: Response): Promise<v
 }
 
 export async function getPlayerRank(request: Request, response: Response): Promise<void> {
-  const playerName: string = request.params.name as string
+  const playerName: string = request.params.name;
 
   const client = createNodeRedisClient();
   const rank: number | null = await client.zrevrank(KEY, playerName);
