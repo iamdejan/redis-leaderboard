@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import {
   checkHealth,
   getPlayer,
+  getPlayerRank,
   getTopNPlayers,
   savePlayer,
   updatePlayer
@@ -18,6 +19,7 @@ app.get("/check", checkHealth);
 app.post("/players", savePlayer);
 app.get("/players", getTopNPlayers);
 app.get("/players/:name", getPlayer);
+app.get("/players/:name/rank", getPlayerRank);
 app.put("/players", updatePlayer);
 
 app.listen(PORT, () => {
