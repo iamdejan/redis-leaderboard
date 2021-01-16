@@ -29,10 +29,14 @@ export async function getTopNPlayers(request: Request, response: Response): Prom
   const client = createNodeRedisClient();
   const playerNames: string[] = await client.zrevrange(KEY, 0, N - 1);
   const players: Player[] = [];
-  for (const playerName of playerNames) {
-    const score: number = Number.parseInt(await client.zscore(KEY, playerName));
-    players.push(new Player(playerName, score))
-  }
+
+  const playerScoresPromises: Promise<string>[] = playerNames.map((playerName) => {
+    return client.zscore(KEY, playerName);
+  });
+  (await Promise.all(playerScoresPromises)).forEach((score, index) => {
+    const playerName: string = playerNames[index];
+    players.push(new Player(playerName, Number.parseInt(score)));
+  });
 
   response.json(players);
 }
